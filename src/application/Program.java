@@ -13,9 +13,10 @@ public class Program {
 
         EmployeeDao empDao = DaoFactory.createEmployeeDao();
 
-        //Test
-
         System.out.println("=== TEST 1: Employee Insert");
-        Employee newEmp = empDao.insert(null, "Pedro Roberto", "pedro@email.com", "Engenheiro", new Date(), 11.200,OrganizationUnit);
+        OrganizationUnit org = new OrganizationUnit(2, null, null, null);
+        Employee newEmp = new Employee(null, "Pedro Roberto", "pedro@email.com", "Engenheiro", new Date(), 11.200, org);
+        empDao.insert(newEmp);
+        System.out.println("Insert completed, new Id: " + newEmp.getId());
     }
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Employee implements Serializable {
 
-    private int id;
+    private Integer id;
     private String name;
     private String email;
     private String job;
@@ -19,7 +19,7 @@ public class Employee implements Serializable {
 
     }
 
-    public Employee(int id, String name, String email, String job, Date birthDate, double baseSalary, OrganizationUnit organizationUnit) {
+    public Employee(Integer id, String name, String email, String job, Date birthDate, double baseSalary, OrganizationUnit organizationUnit) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -29,11 +29,11 @@ public class Employee implements Serializable {
         this.organizationUnit = organizationUnit;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
