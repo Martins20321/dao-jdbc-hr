@@ -5,6 +5,7 @@ import db.DbException;
 import db.DbIntegrityException;
 import model.dao.EmployeeDao;
 import model.entities.Employee;
+import model.entities.OrganizationUnit;
 
 import java.sql.*;
 import java.util.List;
@@ -72,7 +73,57 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
     @Override
     public Employee findById(Integer id) {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try{
+            st = conn.prepareStatement(
+                    "SELECT EMPLOYEE.*, ORGANIZATION_UNIT.Name as orgName "
+                            + "from EMPLOYEE INNER JOIN ORGANIZATION_UNIT "
+                            + "ON EMPLOYEE.OrganizationUnitId = ORGANIZATION_UNIT.Id "
+                            + "WHERE EMPLOYEE.Id = ?");
+
+            st.setInt(1, id);
+            rs = st.executeQuery();
+
+            if(rs.next()){ //Significa que encontrou a tupla
+                OrganizationUnit org = intanciationOrganizationUnit(rs);
+                Employee emp = instanciationEmployee(rs,org);
+                return emp;
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
+    }
+
+    private Employee instanciationEmployee(ResultSet rs, OrganizationUnit org) throws SQLException {
+        Employee emp = new Employee();
+        emp.setId(rs.getInt("id"));
+        emp.setName(rs.getString("name"));
+        emp.setEmail(rs.getString("email"));
+        emp.setJob(rs.getString("job"));
+        emp.setBirthDate(rs.getDate("birthDate"));
+        emp.setBaseSalary(rs.getDouble("baseSalary"));
+        emp.setOrganizationUnit(org);
+
+        return emp;
+    }
+
+    private OrganizationUnit intanciationOrganizationUnit(ResultSet rs) throws SQLException {
+        OrganizationUnit org = new OrganizationUnit();
+        org.setId(rs.getInt("Id"));
+        org.setName(rs.getString("Name"));
+
+        /*org.setAcronym(rs.getString("acronym"));    //Erro de found = Quando não está pedindo na consulta
+        org.setAddress("address");
+        */
+
+        return org;
     }
 
     @Override

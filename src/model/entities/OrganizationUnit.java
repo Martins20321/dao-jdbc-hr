@@ -9,6 +9,10 @@ public class OrganizationUnit implements Serializable {
     private String acronym;
     private String address;
 
+    public OrganizationUnit(){
+
+    }
+
     public OrganizationUnit(int id, String name, String acronym, String address) {
         Id = id;
         Name = name;
