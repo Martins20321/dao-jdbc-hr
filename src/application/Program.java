@@ -11,9 +11,8 @@ public class Program {
         OrganizationUnit org = new OrganizationUnit(1001, "Tecnologia e Desenvolvimento", "TDEV", "Rua 5 - SP");
         System.out.println(org);
 
-        /*
         Employee emp = new Employee(1, "João Carlos", "joao@gmail.com", "Desenvolvedor", new Date(), 3500.00, org);
         System.out.println(emp);
-        */
+
     }
 }
