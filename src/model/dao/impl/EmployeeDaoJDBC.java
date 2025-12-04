@@ -8,7 +8,10 @@ import model.entities.Employee;
 import model.entities.OrganizationUnit;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EmployeeDaoJDBC implements EmployeeDao {
 
@@ -167,5 +170,47 @@ public class EmployeeDaoJDBC implements EmployeeDao {
     @Override
     public List<Employee> findAll() {
         return List.of();
+    }
+
+    @Override
+    public List<Employee> findByOrganization(OrganizationUnit organization) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try{
+            st = conn.prepareStatement(
+                    "SELECT EMPLOYEE.*, "
+                            + "ORGANIZATION_UNIT.Name as OrgName "
+                            + "FROM EMPLOYEE join ORGANIZATION_UNIT on EMPLOYEE.OrganizationUnitId = ORGANIZATION_UNIT.Id "
+                            + "WHERE OrganizationUnitId = ? "
+                            + "order by Name; ");
+
+            st.setInt(1, organization.getId());
+            rs = st.executeQuery();
+
+            List<Employee> list = new ArrayList<>();
+            //Evitando a repetição de Organizations
+            Map<Integer, OrganizationUnit> map = new HashMap<>();
+
+            while(rs.next()){
+
+                //Verificação se já existe um Organization
+                OrganizationUnit org = map.get(rs.getInt("OrganizationUnitId"));
+
+                if(org == null) { //Se não existir, Instanciamos um Organization
+                    org = intanciationOrganizationUnit(rs);
+                    map.put(rs.getInt("OrganizationUnitId"), org); //Salvando no map
+                }
+                Employee emp = instanciationEmployee(rs, org);
+                list.add(emp);
+            }
+            return list;
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 }

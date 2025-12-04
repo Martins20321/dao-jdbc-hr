@@ -7,11 +7,13 @@ import model.entities.Employee;
 import model.entities.OrganizationUnit;
 
 import java.util.Date;
+import java.util.List;
 
 public class Program {
     public static void main(String[] args) {
 
         EmployeeDao empDao = DaoFactory.createEmployeeDao();
+        OrganizationUnit org = new OrganizationUnit(2, null, null, null);
 
         /*
         System.out.println("=== TEST 1: Employee Insert");
@@ -23,11 +25,18 @@ public class Program {
 
         System.out.println();
         System.out.println("=== TEST 2: Employee FindByID");
-        Employee emp = empDao.findById(4);
+        Employee emp = empDao.findById(2);
         System.out.println(emp);
 
         System.out.println();
-        System.out.println("=== TEST 3: Employee Update");
+        System.out.println("=== TEST 3: Employee FindByOrganization");
+        List<Employee> list = empDao.findByOrganization(org);
+        for(Employee e : list){
+            System.out.println(e);
+        }
+
+        System.out.println();
+        System.out.println("=== TEST 4: Employee Update");
         emp = empDao.findById(2);
         emp.setEmail("pedro@gmail.com");
         emp.setJob("Engenheiro");
@@ -35,9 +44,12 @@ public class Program {
         empDao.Update(emp);
         System.out.println("Update Completed");
 
+        /*
         System.out.println();
-        System.out.println("=== TEST 4: Employee Delete");
+        System.out.println("=== TEST 5: Employee Delete");
         empDao.DeleteByID(4);
         System.out.println("Delete Completed");
+        */
+
     }
 }
