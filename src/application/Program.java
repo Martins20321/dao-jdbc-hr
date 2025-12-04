@@ -25,5 +25,14 @@ public class Program {
         System.out.println("=== TEST 2: Employee FindByID");
         Employee emp = empDao.findById(4);
         System.out.println(emp);
+
+        System.out.println();
+        System.out.println("=== TEST 3: Employee Update");
+        emp = empDao.findById(2);
+        emp.setEmail("pedro@gmail.com");
+        emp.setJob("Engenheiro");
+        emp.setBaseSalary(7200.00);
+        empDao.Update(emp);
+        System.out.println("Update Completed");
     }
 }
