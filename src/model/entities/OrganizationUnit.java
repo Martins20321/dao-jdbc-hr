@@ -9,7 +9,7 @@ public class OrganizationUnit implements Serializable {
     private String acronym;
     private String address;
 
-    public OrganizationUnit(){
+    public OrganizationUnit(int i, String mme, String s){
 
     }
 
