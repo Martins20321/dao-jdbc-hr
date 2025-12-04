@@ -87,7 +87,26 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
     @Override
     public void DeleteByID(Integer id) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "DELETE FROM EMPLOYEE "
+                        + "WHERE id = ? ");
 
+            st.setInt(1, id);
+
+            int rowsAffected = st.executeUpdate();
+
+            if(rowsAffected == 0){
+                throw new DbIntegrityException("No rows Affected, This ID does not exist");
+            }
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override

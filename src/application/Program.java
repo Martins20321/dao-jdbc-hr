@@ -34,5 +34,10 @@ public class Program {
         emp.setBaseSalary(7200.00);
         empDao.Update(emp);
         System.out.println("Update Completed");
+
+        System.out.println();
+        System.out.println("=== TEST 4: Employee Delete");
+        empDao.DeleteByID(4);
+        System.out.println("Delete Completed");
     }
 }
