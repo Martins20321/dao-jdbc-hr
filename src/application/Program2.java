@@ -16,7 +16,7 @@ public class Program2 {
         System.out.println(org);
 
         System.out.println();
-        System.out.println("===  TEST 1: OrganizationUnit FindById");
+        System.out.println("===  TEST 2: OrganizationUnit FindAll");
         List<OrganizationUnit> list = orgDao.findAll();
         for(OrganizationUnit o : list){
             System.out.println(org);
