@@ -4,6 +4,8 @@ import model.dao.DaoFactory;
 import model.dao.OrganizationUnitDao;
 import model.entities.OrganizationUnit;
 
+import java.util.List;
+
 public class Program2 {
     public static void main(String[] args) {
 
@@ -12,5 +14,12 @@ public class Program2 {
         System.out.println("===  TEST 1: OrganizationUnit FindById");
         OrganizationUnit org = orgDao.findById(2);
         System.out.println(org);
+
+        System.out.println();
+        System.out.println("===  TEST 1: OrganizationUnit FindById");
+        List<OrganizationUnit> list = orgDao.findAll();
+        for(OrganizationUnit o : list){
+            System.out.println(org);
+        }
     }
 }
