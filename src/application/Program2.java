@@ -21,5 +21,11 @@ public class Program2 {
         for(OrganizationUnit o : list){
             System.out.println(org);
         }
+
+        System.out.println();
+        System.out.println("===  TEST 3: OrganizationUnit Insert");
+        OrganizationUnit newOrg = new OrganizationUnit(null,"Usinas e Energias", "USE", "Rua 9 sul - Brasília");
+        orgDao.insert(newOrg);
+        System.out.println("Insert Completed, Your new Id: " + newOrg);
     }
 }

@@ -5,10 +5,7 @@ import db.DbException;
 import model.dao.OrganizationUnitDao;
 import model.entities.OrganizationUnit;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,34 @@ public class OrganizationUnitJDBC implements OrganizationUnitDao {
     }
     @Override
     public void insert(OrganizationUnit obj) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "INSERT INTO ORGANIZATION_UNIT (Name, acronym, address) VALUES "
+                    + "(?, ?, ?)",
+            Statement.RETURN_GENERATED_KEYS);
 
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getAcronym());
+            st.setString(3, obj.getAddress());
+
+            int rowsAffected = st.executeUpdate();
+
+            if(rowsAffected > 0){ //Significa que inseriu uma linha ao banco
+                ResultSet rs = st.getGeneratedKeys();//Mostrar a chave gerada
+                if(rs.next()){//Após inserir, o ResultSet ler a linha
+                    int id = rs.getInt(1);//Primeira coluna corresponde ao Id
+                    obj.setId(id);//Adiciona o id ao objeto
+                }
+                DB.closeResultSet(rs);
+            }
+        }
+        catch(SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class OrganizationUnit implements Serializable {
-    private int Id;
+    private Integer Id;
     private String Name;
     private String acronym;
     private String address;
@@ -13,18 +13,18 @@ public class OrganizationUnit implements Serializable {
 
     }
 
-    public OrganizationUnit(int id, String name, String acronym, String address) {
+    public OrganizationUnit(Integer id, String name, String acronym, String address) {
         Id = id;
         Name = name;
         this.acronym = acronym;
         this.address = address;
     }
 
-    public int getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         Id = id;
     }
 
