@@ -2,6 +2,7 @@ package model.dao.impl;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import model.dao.OrganizationUnitDao;
 import model.entities.OrganizationUnit;
 
@@ -75,7 +76,26 @@ public class OrganizationUnitJDBC implements OrganizationUnitDao {
 
     @Override
     public void DeleteByID(Integer id) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "DELETE FROM ORGANIZATION_UNIT "
+                        + "WHERE id = ?");
 
+            st.setInt(1, id);
+            int rowsAffected = st.executeUpdate();
+
+            //Teste de verificação
+            if(rowsAffected == 0){ //Significa que nenhuma linha foi deletada
+                throw new DbIntegrityException("Unexpected error, this ID does not exist.");
+            }
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override

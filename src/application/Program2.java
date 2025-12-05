@@ -19,7 +19,7 @@ public class Program2 {
         System.out.println("===  TEST 2: OrganizationUnit FindAll");
         List<OrganizationUnit> list = orgDao.findAll();
         for(OrganizationUnit o : list){
-            System.out.println(org);
+            System.out.println(o);
         }
 
         /*
@@ -55,5 +55,10 @@ public class Program2 {
         org.setAddress("Rua 22 Norte - Brasília,DF");
         orgDao.Update(org);
         System.out.println("Update Completed");
+
+        System.out.println();
+        System.out.println("===  TEST 5: OrganizationUnit Delete");
+        orgDao.DeleteByID(6);
+        System.out.println("Delete Completed");
     }
 }
