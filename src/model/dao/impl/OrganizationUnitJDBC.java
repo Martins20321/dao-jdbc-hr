@@ -48,9 +48,29 @@ public class OrganizationUnitJDBC implements OrganizationUnitDao {
         }
     }
 
+
     @Override
     public void Update(OrganizationUnit obj) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "UPDATE ORGANIZATION_UNIT "
+                    + "SET Name = ?, acronym = ?, address = ? "
+                    + "WHERE Id = ?;");
 
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getAcronym());
+            st.setString(3, obj.getAddress());
+            st.setInt(4, obj.getId());
+
+            st.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override

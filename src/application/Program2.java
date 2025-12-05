@@ -22,10 +22,38 @@ public class Program2 {
             System.out.println(org);
         }
 
+        /*
         System.out.println();
         System.out.println("===  TEST 3: OrganizationUnit Insert");
         OrganizationUnit newOrg = new OrganizationUnit(null,"Usinas e Energias", "USE", "Rua 9 sul - Brasília");
         orgDao.insert(newOrg);
         System.out.println("Insert Completed, Your new Id: " + newOrg);
+        */
+
+
+        /*
+        System.out.println();
+        System.out.println("===  TEST 3.1: OrganizationUnit Insert");
+        OrganizationUnit newOrg = new OrganizationUnit(null,"Versão Teste de Update", "VTU", "Rua 89 sul - Rio Grande do Norte");
+        orgDao.insert(newOrg);
+        System.out.println("Insert Completed, Your new Id: " + newOrg);
+        */
+
+        /*
+        System.out.println();
+        System.out.println("===  TEST 3.2: OrganizationUnit Insert");
+        OrganizationUnit newOrg = new OrganizationUnit(null,"Versão Teste de Delete", "VTD", "Rua 89 sul - Rio Grande do Norte");
+        orgDao.insert(newOrg);
+        System.out.println("Insert Completed, Your new Id: " + newOrg);
+        */
+
+        System.out.println();
+        System.out.println("===  TEST 4: OrganizationUnit Update");
+        org = orgDao.findById(4);
+        org.setName("Ministério Publico");
+        org.setAcronym("MP");
+        org.setAddress("Rua 22 Norte - Brasília,DF");
+        orgDao.Update(org);
+        System.out.println("Update Completed");
     }
 }
