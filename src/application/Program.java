@@ -51,5 +51,12 @@ public class Program {
         System.out.println("Delete Completed");
         */
 
+        System.out.println();
+        System.out.println("=== TEST 6: Employee FindAll");
+        List<Employee> newlist = empDao.findAll();
+        for(Employee e : list){
+            System.out.println(e);
+        }
+
     }
 }

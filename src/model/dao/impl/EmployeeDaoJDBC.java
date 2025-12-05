@@ -169,7 +169,42 @@ public class EmployeeDaoJDBC implements EmployeeDao {
 
     @Override
     public List<Employee> findAll() {
-        return List.of();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try{
+            st = conn.prepareStatement(
+                    "SELECT EMPLOYEE.*, "
+                            + "ORGANIZATION_UNIT.Name as orgName "
+                            + "FROM EMPLOYEE join ORGANIZATION_UNIT  on EMPLOYEE.OrganizationUnitId = ORGANIZATION_UNIT.Id "
+                            + "order by Name;");
+
+            rs = st.executeQuery();
+
+            List<Employee> list = new ArrayList<>();
+            Map<Integer, OrganizationUnit> map = new HashMap<>();
+
+            while(rs.next()){
+
+                //Verificando se já existe
+                OrganizationUnit org = map.get(rs.getInt("OrganizationUnitId"));
+
+                if(org == null) { //Se não existir, instancia e add ao map
+                    org = intanciationOrganizationUnit(rs);
+                    map.put(rs.getInt("OrganizationUnitId"), org); //Passando a chave e o valor;
+                }
+                Employee emp = instanciationEmployee(rs, org);
+                list.add(emp);
+            }
+            return list;
+        }
+        catch(SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally{
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+
     }
 
     @Override
